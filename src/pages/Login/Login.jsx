@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEyeSlash } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import Logo from "../../assets/images/download.jpeg";
+import Logo from "../../assets/images/logo.svg";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => {

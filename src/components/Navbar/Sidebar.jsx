@@ -7,7 +7,7 @@ import { HiOutlineUsers } from "react-icons/hi2";
 import { CiStar } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
-import DashboardIcon from "../../assets/images/download.jpeg"
+import DashboardIcon from "../../assets/images/logo.svg"
 import IconArchive from "../../assets/images/icon-archive.svg"
 import IconClipboard from "../../assets/images/icon-clipboard.svg"
 import IconHelp from "../../assets/images/icon-help-circle.svg"
