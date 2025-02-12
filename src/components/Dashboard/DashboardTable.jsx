@@ -3,7 +3,7 @@ import React from "react";
 const DashboardTable = () => {
   const tableData = [
     {
-      firstName: "Connor",
+      firstName: "noor fatima",
       lastName: "Philip",
       emailaddress: "cphilip@outlook.com",
       location: "	Essex",
@@ -13,8 +13,28 @@ const DashboardTable = () => {
       action: "Block",
     },
     {
-      firstName: "Connor",
+      firstName: "tehreem fatima",
       lastName: "Philip",
+      emailaddress: "cphilip@outlook.com",
+      location: "	Essex",
+      role: "Electrician",
+      typeOfOrganization: "Sole trader",
+      subscriber: "To Review",
+      action: "Block",
+    },
+    {
+      firstName: "imana ghumman",
+      lastName: "Philip",
+      emailaddress: "cphilip@outlook.com",
+      location: "	Essex",
+      role: "Electrician",
+      typeOfOrganization: "Sole trader",
+      subscriber: "To Review",
+      action: "Block",
+    },
+    {
+      firstName: "faiza",
+      lastName: "aslam",
       emailaddress: "cphilip@outlook.com",
       location: "	Essex",
       role: "Electrician",
