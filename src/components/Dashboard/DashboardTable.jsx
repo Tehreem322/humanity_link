@@ -23,7 +23,7 @@ const DashboardTable = () => {
       action: "Block",
     },
     {
-      firstName: "imana ghumman",
+      firstName: "iman fatima",
       lastName: "Philip",
       emailaddress: "cphilip@outlook.com",
       location: "	Essex",
@@ -33,7 +33,7 @@ const DashboardTable = () => {
       action: "Block",
     },
     {
-      firstName: "faiza",
+      firstName: "bisma rana",
       lastName: "aslam",
       emailaddress: "cphilip@outlook.com",
       location: "	Essex",
