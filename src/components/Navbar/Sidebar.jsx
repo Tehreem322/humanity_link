@@ -1,6 +1,6 @@
 import React, { useState,useRef,useEffect  } from "react";
 import { HiOutlineExclamationTriangle } from "react-icons/hi2";
-import SidebarLogo from "../../assets/images/logo.svg";
+import SidebarLogo from "../../assets/images/humanity.png";
 import { SlSupport } from "react-icons/sl";
 import { RiHomeLine } from "react-icons/ri";
 import { HiOutlineUsers } from "react-icons/hi2";
