@@ -1,13 +1,13 @@
 import React, { useState,useRef,useEffect  } from "react";
 import { HiOutlineExclamationTriangle } from "react-icons/hi2";
-import SidebarLogo from "../../assets/images/logo.svg";
+import SidebarLogo from "../../assets/images/humanity..png";
 import { SlSupport } from "react-icons/sl";
 import { RiHomeLine } from "react-icons/ri";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CiStar } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
-import DashboardIcon from "../../assets/images/logo.svg"
+import DashboardIcon from "../../assets/images/humanity..png"
 import IconArchive from "../../assets/images/icon-archive.svg"
 import IconClipboard from "../../assets/images/icon-clipboard.svg"
 import IconHelp from "../../assets/images/icon-help-circle.svg"
@@ -46,16 +46,17 @@ const Sidebar = () => {
         <div className="sidebar-content">
           {/* Add your navigation items here */}
           <div className="nav-item">
-            <div className="border-b border-[#FFFFFF4D]">
+          <div className="border-b border-[#FFFFFF4D] w-20 h-20 rounded-xl shadow-md overflow-hidden">
               <img className="p-3 " src={SidebarLogo} alt="" />
             </div>
 
-            <div className="nav-item mt-3">
+            <div className="nav-item mt-1">
               <NavItem
                 to="/dashboard"
                 icon={DashboardIcon}
                 text="Dashboard"
                 location={location}
+                className="w-auto h-20 "
               />
               <div>
                 <NavItem

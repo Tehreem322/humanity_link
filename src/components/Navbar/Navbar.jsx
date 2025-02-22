@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import React, { Fragment } from "react";
-import userImg from "../../assets/images/user-img.svg";
+import userImg from "../../assets/images/download.png"
 import LogoutSvg from "../../assets/images/Logout.svg";
 import { Link } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
@@ -22,7 +22,7 @@ const Navbar = () => {
                 <IoSearch />
               </span>
               <input
-                className="border border-[#D1D5DB] bg-[#F3F4F6] w-[150px] md:w-[300px] py-[7px] rounded-md px-10 outline-none"
+                className="border border-[#D1D5DB] bg-[#F3F4F6] w-[15opx] md:w-[300px] py-[7px] rounded-md px-10 outline-none"
                 placeholder="Search"
                 type="text"
               />
