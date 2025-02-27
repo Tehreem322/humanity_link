@@ -1,22 +1,24 @@
-import React, { useState,useRef,useEffect  } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { HiOutlineExclamationTriangle } from "react-icons/hi2";
-import SidebarLogo from "../../assets/images/humanity..png";
+import SidebarLogo from "../../assets/images/humanity.png";
 import { SlSupport } from "react-icons/sl";
 import { RiHomeLine } from "react-icons/ri";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CiStar } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
-import DashboardIcon from "../../assets/images/humanity..png"
-import IconArchive from "../../assets/images/icon-archive.svg"
-import IconClipboard from "../../assets/images/icon-clipboard.svg"
-import IconHelp from "../../assets/images/icon-help-circle.svg"
+import { FaUsers } from "react-icons/fa";
+import DashboardIcon from "../../assets/images/logo.svg";
+import IconArchive from "../../assets/images/icon-archive.svg";
+import IconClipboard from "../../assets/images/icon-clipboard.svg";
+import IconHelp from "../../assets/images/icon-help-circle.svg";
+import { IoChatboxOutline } from "react-icons/io5";
 
 import NavItem from "./NavItem";
+import SubNavItem from "./SubNavItem";
 const Sidebar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
-
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
@@ -24,7 +26,11 @@ const Sidebar = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Check if click is outside the sidebar and sidebar is open
-      if (isSidebarOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      if (
+        isSidebarOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
         setSidebarOpen(false); // Close the sidebar
       }
     };
@@ -39,24 +45,62 @@ const Sidebar = () => {
   }, [isSidebarOpen]);
   return (
     <div className="">
-      <div ref={sidebarRef} className={`sidebar ${isSidebarOpen ? "open" : ""} bg-color`}>
+      <div
+        ref={sidebarRef}
+        className={`sidebar ${isSidebarOpen ? "open" : ""} bg-color`}
+      >
         <button className="sidebar-toggle-button " onClick={toggleSidebar}>
           {isSidebarOpen ? "X" : "☰"}
         </button>
         <div className="sidebar-content">
           {/* Add your navigation items here */}
           <div className="nav-item">
-          <div className="border-b border-[#FFFFFF4D] w-20 h-20 rounded-xl shadow-md overflow-hidden">
-              <img className="p-3 " src={SidebarLogo} alt="" />
+            <div className="border-b border-[#FFFFFF4D]">
+              <img
+                className="p-3 h-20 w-20 rounded-full"
+                src={SidebarLogo}
+                alt=""
+              />
             </div>
 
-            <div className="nav-item mt-1">
-              <NavItem
+            <div className="nav-item mt-3">
+              {/* <NavItem
                 to="/dashboard"
                 icon={DashboardIcon}
                 text="Dashboard"
                 location={location}
-                className="w-auto h-20 "
+              /> */}
+              <NavItem
+                to="/dashboards"
+                icon={IconClipboard}
+                text="Dashboard"
+                location={location}
+              />
+              <NavItem
+                to="/Users"
+                icon={<FaUsers />}
+                text="Users"
+                location={location}
+              />
+              <NavItem
+                to="/chat"
+                icon={<IoChatboxOutline />}
+                text="Chat"
+                location={location}
+              />
+              <NavItem
+                to="/help-request"
+                icon={IconArchive}
+                text="Help request"
+                location={location}
+                subItems={[
+                  {
+                    to: "/help-form",
+                    icon: IconArchive,
+                    text: "Help form",
+                  },
+                  // You can add more sub-items here if needed
+                ]}
               />
               <div>
                 <NavItem
@@ -67,19 +111,18 @@ const Sidebar = () => {
                 />
               </div>
 
-              <NavItem
+              {/* <NavItem
                 to="/feedback-survey"
                 icon={IconClipboard}
                 text="Feedback survey"
                 location={location}
-              />
+              /> */}
               <NavItem
                 to="/contact-form"
                 icon={IconHelp}
                 text="Contact form"
                 location={location}
               />
-
             </div>
           </div>
         </div>
