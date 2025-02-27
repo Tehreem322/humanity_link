@@ -13,7 +13,7 @@ import IconArchive from "../../assets/images/icon-archive.svg";
 import IconClipboard from "../../assets/images/icon-clipboard.svg";
 import IconHelp from "../../assets/images/icon-help-circle.svg";
 import { IoChatboxOutline } from "react-icons/io5";
-
+import { ImProfile } from "react-icons/im";
 import NavItem from "./NavItem";
 import SubNavItem from "./SubNavItem";
 const Sidebar = () => {
@@ -71,7 +71,7 @@ const Sidebar = () => {
                 location={location}
               /> */}
               <NavItem
-                to="/dashboards"
+                to="/dashboard"
                 icon={IconClipboard}
                 text="Dashboard"
                 location={location}
@@ -107,6 +107,14 @@ const Sidebar = () => {
                   to="/resources-management"
                   icon={IconArchive}
                   text="Resources management"
+                  location={location}
+                />
+              </div>
+              <div>
+                <NavItem
+                  to="/profile-info"
+                  icon={<ImProfile />}
+                  text="Profile"
                   location={location}
                 />
               </div>
