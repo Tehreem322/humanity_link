@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Humanity link</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="#" class="text-white text-lg font-bold"><img src="images/pagelogo.png"> </a>
+      <ul class="flex space-x-4">
+        <li><a href="#" class="text-white hover:text-gray-400">Home</a></li>
+        <li><a href="#" class="text-white hover:text-gray-400">About</a></li>
+        <li><a href="#" class="text-white hover:text-gray-400">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- slider -->
+
+  
+<div class="bg-gray-500 flex items-center justify-center min-h-screen width-100">
+
+  <div class="relative w-full max-w-xl overflow-hidden">
+    <!-- Slides container -->
+    <div id="slider" class="flex transition-transform duration-500">
+      <img src="/images/slider1.jpeg" class="w-full flex-shrink-0" />
+      <img src="/images/slider1.jpeg" class="w-full flex-shrink-0" />
+      <img src="/images/slider1.jpeg" class="w-full flex-shrink-0" />
+    </div>
+
+    <!-- Buttons -->
+    <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+      &#10094;
+    </button>
+    <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+      &#10095;
+    </button>
+  </div>
+  <script>
+    const slider = document.getElementById('slider');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+
+    let currentIndex = 0;
+    const slides = slider.children;
+    const totalSlides = slides.length;
+
+    function updateSlider() {
+      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    prev.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    });
+
+    next.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateSlider();
+    });
+  </script>
+
+  
+  </div>
+
+  <!-- cards -->
+
+ 
+  <div class="bg-gray-100 flex items-center justify-center min-h-screen p-5">
+  
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <img class="w-full h-48 object-cover" src="https://via.placeholder.com/400x200" alt="Card Image" />
+        <div class="p-5">
+          <h2 class="text-xl font-semibold mb-2">Card One</h2>
+          <p class="text-gray-600 mb-4">Description for card one. Add any content you like.</p>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Read More</button>
+        </div>
+      </div>
+  
+      <!-- Card 2 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <img class="w-full h-48 object-cover" src="https://via.placeholder.com/400x200/33C1FF/FFFFFF" alt="Card Image" />
+        <div class="p-5">
+          <h2 class="text-xl font-semibold mb-2">Card Two</h2>
+          <p class="text-gray-600 mb-4">Description for card two. Easily customizable.</p>
+          <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Read More</button>
+        </div>
+      </div>
+  
+      <!-- Card 3 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <img class="w-full h-48 object-cover" src="https://via.placeholder.com/400x200/FF5733/FFFFFF" alt="Card Image" />
+        <div class="p-5">
+          <h2 class="text-xl font-semibold mb-2">Card Three</h2>
+          <p class="text-gray-600 mb-4">Description for card three. Beautiful and responsive.</p>
+          <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">Read More</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  
+ 
+  
+
+
+
+
+  <!-- Background Image with Humantiy Conent -->
+  <div class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('https://via.placeholder.com/1920x1080');">
+    <!-- Content Overlay -->
+    <div class="bg-black bg-opacity-50 p-8 rounded-lg text-center text-white max-w-2xl mx-4">
+      <h1 class="text-4xl font-bold mb-4">About Our NGO</h1>
+      <p class="text-lg mb-6">
+        We are a non-profit organization dedicated to making a difference in the world. Our mission is to provide support, education, and resources to those in need. Join us in our journey to create a better future for all.
+      </p>
+      <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        Learn More
+      </button>
+    </div>
+  </div>
+</body>
+</html>
