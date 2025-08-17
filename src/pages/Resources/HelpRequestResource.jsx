@@ -9,7 +9,7 @@ const HelpRequestResources = () => {
         <div className="md:ml-[17rem]">
           <div className="container-main">
             {" "}
-            <ResourceHelpRequestTopbar/>
+            {/* <ResourceHelpRequestTopbar/> */}
            <HelpRequestCard/>
           </div>
         </div>

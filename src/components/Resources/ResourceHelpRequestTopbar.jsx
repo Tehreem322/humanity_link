@@ -26,7 +26,7 @@ const ResourceHelpRequestTopbar = () => {
           {/* <span>
     <img src={UploadSvg} alt="" />
   </span> */}
-          <span>Request for help</span>
+          <span>Create Help</span>
         </Link>
       </div>
     </>

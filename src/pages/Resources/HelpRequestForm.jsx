@@ -1,209 +1,154 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
+import { toast } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
+
 const HelpRequestForm = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    image: null,
+  });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleImageChange = (e) => {
+    setFormData({
+      ...formData,
+      image: e.target.files[0],
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("description", formData.description);
+      formDataToSend.append("image", formData.image);
+
+      const response = await fetch("http://localhost:3000/api/ngo/createNgo", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to create NGO");
+      }
+
+      toast.success("NGO created successfully!", {
+        onClose: () => navigate("/help-request"),
+        autoClose: 2000, // Close after 2 seconds
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        title: "",
+        description: "",
+        image: null,
+      });
+
+    } catch (error) {
+      toast.error(error.message || "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Layout>
         <div className="md:ml-[17rem]">
           <div className="container-main">
-            {" "}
-            <div class="max-w-lg mx-auto p-6 mt-2 bg-white rounded-lg shadow-lg">
-              <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
-                Help Request for Humanity
+            <div className="max-w-lg mx-auto p-6 mt-2 bg-white rounded-lg shadow-lg">
+              <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+                Create Help Request
               </h2>
 
-              <form action="#" method="POST">
-                <div class="mb-4">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-4">
                   <label
-                    for="fullName"
-                    class="block text-sm font-medium text-gray-700"
+                    htmlFor="title"
+                    className="block text-sm font-medium text-gray-700"
                   >
-                    Full Name
+                    Title
                   </label>
                   <input
                     type="text"
-                    id="fullName"
-                    name="fullName"
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
                     required
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
-                <div class="mb-4">
+                <div className="mb-4">
                   <label
-                    for="email"
-                    class="block text-sm font-medium text-gray-700"
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700"
                   >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label
-                    for="phone"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    required
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label
-                    for="country"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Country of Residence
-                  </label>
-                  <input
-                    type="text"
-                    id="country"
-                    name="country"
-                    required
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label
-                    for="assistanceType"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Type of Assistance Required
-                  </label>
-                  <select
-                    id="assistanceType"
-                    name="assistanceType"
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="financial">Financial Aid</option>
-                    <option value="food">Food</option>
-                    <option value="shelter">Shelter</option>
-                    <option value="medical">Medical Help</option>
-                    <option value="education">Education</option>
-                  </select>
-                </div>
-
-                <div class="mb-4">
-                  <label
-                    for="situation"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Description of the Situation
+                    Description
                   </label>
                   <textarea
-                    id="situation"
-                    name="situation"
+                    id="description"
+                    name="description"
                     rows="4"
+                    value={formData.description}
+                    onChange={handleChange}
                     required
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   ></textarea>
                 </div>
 
-                <div class="mb-4">
+                <div className="mb-4">
                   <label
-                    for="urgency"
-                    class="block text-sm font-medium text-gray-700"
+                    htmlFor="image"
+                    className="block text-sm font-medium text-gray-700"
                   >
-                    Urgency Level
-                  </label>
-                  <select
-                    id="urgency"
-                    name="urgency"
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="immediate">Immediate</option>
-                    <option value="within-a-week">Within a week</option>
-                    <option value="long-term">In the coming months</option>
-                  </select>
-                </div>
-
-                <div class="mb-4">
-                  <label
-                    for="location"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Location
+                    Upload Image
                   </label>
                   <input
-                    type="text"
-                    id="location"
-                    name="location"
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleImageChange}
                     required
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
-                <div class="mb-4">
-                  <label
-                    for="preferredMethod"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Preferred Method of Assistance
-                  </label>
-                  <input
-                    type="text"
-                    id="preferredMethod"
-                    name="preferredMethod"
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label
-                    for="requirements"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Specific Requirements
-                  </label>
-                  <textarea
-                    id="requirements"
-                    name="requirements"
-                    rows="4"
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ></textarea>
-                </div>
-
-                <div class="mb-4">
-                  <label
-                    for="howHeard"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    How You Heard About This Help Link
-                  </label>
-                  <input
-                    type="text"
-                    id="howHeard"
-                    name="howHeard"
-                    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div class="flex justify-center">
+                <div className="flex justify-center">
                   <button
                     type="submit"
-                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={loading}
+                    className={`bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      loading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   >
-                    Submit Request
+                    {loading ? "Submitting..." : "Submit Request"}
                   </button>
                 </div>
               </form>
             </div>
           </div>
         </div>
+        <ToastContainer/>
       </Layout>
     </>
   );

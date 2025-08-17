@@ -1,51 +1,76 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+  import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const DashboardTable = () => {
-  const tableData = [
-    {
-      firstName: "noor fatima",
-      lastName: "Philip",
-      emailaddress: "cphilip@outlook.com",
-      location: "	Essex",
-      role: "data analyst",
-      typeOfOrganization: "Sole trader",
-      subscriber: "To Review",
-      action: "Block",
-    },
-    {
-      firstName: "tehreem fatima",
-      lastName: "Philip",
-      emailaddress: "cphilip@outlook.com",
-      location: "	Essex",
-      role: "ceo pagalkhana",
-      typeOfOrganization: "Sole trader",
-      subscriber: "To Review",
-      action: "Block",
-    },
-    {
-      firstName: "iman fatima",
-      lastName: "Philip",
-      emailaddress: "cphilip@outlook.com",
-      location: "	Essex",
-      role: "professor phd",
-      typeOfOrganization: "Sole trader",
-      subscriber: "To Review",
-      action: "Block",
-    },
-    {
-      firstName: "bisma  arain",
-      lastName: "aslam",
-      emailaddress: "cphilip@outlook.com",
-      location: "	Essex",
-      role: "engineer",
-      typeOfOrganization: "Sole trader",
-      subscriber: "To Review",
-      action: "Block",
-    },
-  ];
+  const [tableData, setTableData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentRole, setCurrentRole] = useState("help_seeker");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `https://satillite-town-backend-5i11.vercel.app/api/auth/user/getAllCustomers?role=${currentRole}`
+        );
+        setTableData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentRole]);
+
+  const toggleRoleFilter = () => {
+    setCurrentRole(currentRole === "help_seeker" ? "help_creator" : "help_seeker");
+  };
+
+  const handleEdit = (userId) => {
+    navigate(`/profile-edit/${userId}`);
+  };
+ const handleBlock = async (userId) => {
+    try {
+      const response = await axios.delete(
+        `https://satillite-town-backend-5i11.vercel.app/api/auth/user/deleteSingleUser/${userId}`
+      );
+      
+      if (response.data.success) {
+        toast.success("User blocked successfully");
+        // Refresh the table data
+        const updatedResponse = await axios.get(
+          `https://satillite-town-backend-5i11.vercel.app/api/auth/user/getAllCustomers?role=${currentRole}`
+        );
+        setTableData(updatedResponse.data);
+      } else {
+        toast.error(response.data.message || "Failed to block user");
+      }
+    } catch (error) {
+      console.error("Error blocking user:", error);
+      toast.error(error.response?.data?.message || "Failed to block user");
+    }
+  };
+  if (loading) {
+    return <div className="text-center py-8">Loading...</div>;
+  }
+
   return (
     <>
-      {" "}
+      {/* Role filter toggle */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={toggleRoleFilter}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+        >
+          Show {currentRole === "help_seeker" ? "Help Creators" : "Help Seekers"}
+        </button>
+      </div>
+
       {/* table */}
       <div className="w-full mt-5">
         <div className="">
@@ -55,7 +80,7 @@ const DashboardTable = () => {
                 <table className="min-w-full">
                   {/* HEAD start */}
                   <thead>
-                    <tr className="bg-[#4BBDCB33] border-b border-gray-200 text-xs leading-4 text-gray-500  tracking-wider">
+                    <tr className="bg-[#4BBDCB33] border-b border-gray-200 text-xs leading-4 text-gray-500 tracking-wider">
                       <th className="px-6 py-3 text-left font-medium">#</th>
                       <th className="px-6 mt-1 md:mt-0 py-3 text-left font-medium secondary-para">
                         <span>
@@ -79,13 +104,6 @@ const DashboardTable = () => {
                       <th className="">
                         <div className="px-6 py-3 text-left font-medium secondary-para">
                           <span>
-                            <p>Location</p>
-                          </span>
-                        </div>{" "}
-                      </th>
-                      <th className="">
-                        <div className="px-6 py-3 text-left font-medium secondary-para">
-                          <span>
                             <p>Role</p>
                           </span>
                         </div>{" "}
@@ -93,21 +111,7 @@ const DashboardTable = () => {
                       <th className="">
                         <div className="px-6 py-3 text-left font-medium secondary-para">
                           <span>
-                            <p>Type of organisation</p>
-                          </span>
-                        </div>{" "}
-                      </th>
-                      <th className="">
-                        <div className="px-6 py-3 text-left font-medium secondary-para">
-                          <span>
-                            <p>-</p>
-                          </span>
-                        </div>{" "}
-                      </th>
-                      <th className="">
-                        <div className="px-6 py-3 text-left font-medium secondary-para">
-                          <span>
-                            <p>Subscriber</p>
+                            <p>Status</p>
                           </span>
                         </div>{" "}
                       </th>
@@ -123,12 +127,12 @@ const DashboardTable = () => {
                   {/* HEAD end */}
                   {/* BODY start */}
                   <tbody className="bg-white">
-                    {tableData?.map((item, index) => {
+                    {tableData?.data?.map((item, index) => {
                       return (
-                        <tr key={index}>
+                        <tr key={item._id}>
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                          <div className="flex items-center">
-                              <p className="secondary-para2">{index+1}</p>
+                            <div className="flex items-center">
+                              <p className="secondary-para2">{index + 1}</p>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -138,43 +142,42 @@ const DashboardTable = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div className="flex items-center">
-                              <p className="secondary-para2"> {item?.lastName}</p>
+                              <p className="secondary-para2">{item?.lastName}</p>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div className="flex items-center">
-                              <p className="secondary-para2"> {item?.emailaddress}</p>
+                              <p className="secondary-para2">{item?.email}</p>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div className="flex items-center">
-                              <p className="secondary-para2"> {item?.location}</p>
+                              <p className="secondary-para2 capitalize">{item?.role?.replace('_', ' ')}</p>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div className="flex items-center">
-                              <p className="secondary-para2"> {item?.role}</p>
+                              <span className={`px-2 py-1 rounded-full text-xs ${
+                                item?.isDeleted ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                              }`}>
+                                {item?.isDeleted ? 'Inactive' : 'Active'}
+                              </span>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <div className="flex items-center">
-                              <p className="secondary-para2"> {item?.typeOfOrganization}</p>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <div className="flex items-center">
-                              <p className="secondary-para2"> -</p>
-                            </div>
-                          </td>
-                          <td className="px-10 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <input
-                              className="form-checkbox  h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                              type="checkbox"
-                            />
-                          </td>
-                          <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <div className="flex items-center">
-                              <p className="secondary-para3 flex items-center gap-2"><span>-</span> {item?.action}</p>
+                            <div className="flex items-center space-x-2">
+                              <button
+                                onClick={() => handleEdit(item._id)}
+                                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                              >
+                                Edit
+                              </button>
+                               <button 
+                                onClick={() => handleBlock(item._id)}
+                                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                              >
+                                Block
+                              </button>
                             </div>
                           </td>
                         </tr>
@@ -187,6 +190,7 @@ const DashboardTable = () => {
             </div>
           </div>
         </div>
+       < ToastContainer/>
       </div>
     </>
   );
