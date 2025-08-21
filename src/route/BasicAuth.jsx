@@ -68,7 +68,7 @@ export const router = createBrowserRouter(
             <Chat />
         } 
       />
-      <Route path="/chatOther/:creatorId" element={<ChatOther />} />
+      <Route path="/chatOther/:userId" element={<ChatOther />} />
       {/* Chat route - only for help_creator */}
       {/* <Route 
         path="/chat" 

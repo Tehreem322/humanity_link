@@ -32,12 +32,12 @@ const ChatForm = () => {
       try {
         if (userRole === 'help_creator') {
           const response = await axios.get(
-            'https://satillite-town-backend-5i11.vercel.app/api/auth/user/getAllCustomers?role=help_seeker'
+            'http://localhost:3000/api/auth/user/getAllCustomers?role=help_seeker'
           );
           setHelpSeekers(response.data.data);
         } else {
           const response = await axios.get(
-            'https://satillite-town-backend-5i11.vercel.app/api/auth/user/getAllCustomers?role=help_creator'
+            'http://localhost:3000/api/auth/user/getAllCustomers?role=help_creator'
           );
           setHelpCreators(response.data.data);
         }
@@ -53,11 +53,20 @@ const ChatForm = () => {
   useEffect(() => {
     if (!currentUser) return;
 
-    socketRef.current = io('https://satillite-town-backend-5i11.vercel.app', {
+    // socketRef.current = io('https://satillite-town-backend-5i11.vercel.app', {
+    //   withCredentials: true,
+    //   transports: ['websocket']
+    // });
+ socketRef.current = io('http://localhost:3000', {
       withCredentials: true,
-      transports: ['websocket']
+      transports: ['websocket', 'polling'],
+      upgrade: true,
+      forceNew: true,
+      timeout: 10000,
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
     });
-
     // Authenticate with the server
     socketRef.current.emit('authenticate', currentUser);
 
@@ -108,7 +117,7 @@ const ChatForm = () => {
     const fetchConversation = async () => {
       try {
         const response = await axios.get(
-          `https://satillite-town-backend-5i11.vercel.app/api/auth/user/conversation/${currentUser}/${selectedRecipient}`
+          `http://localhost:3000/api/auth/user/conversation/${currentUser}/${selectedRecipient}`
         );
         setConversation(response.data.data);
       } catch (error) {
