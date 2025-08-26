@@ -9,9 +9,9 @@ const Feedback = () => {
      <Layout>
         <div className="md:ml-[17rem]">
           <div className="container-main">
-            <FeedbackTopbar/>
+            {/* <FeedbackTopbar/>
             <FeedbackCard/>
-            <FeedbackCharts/>
+            <FeedbackCharts/> */}
           </div>
         </div>
       </Layout>

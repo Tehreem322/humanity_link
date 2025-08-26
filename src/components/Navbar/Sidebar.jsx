@@ -89,7 +89,7 @@ const Sidebar = () => {
                 location={location}
               />
               <NavItem
-                to="/help-request"
+                to="/help-creators"
                 icon={IconArchive}
                 text="Help request"
                 location={location}
@@ -106,7 +106,7 @@ const Sidebar = () => {
                 <NavItem
                   to="/resources-management"
                   icon={IconArchive}
-                  text="Resources management"
+                  text="help seekers"
                   location={location}
                 />
               </div>

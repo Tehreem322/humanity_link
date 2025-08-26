@@ -9,7 +9,7 @@ const Resources = () => {
         <div className="md:ml-[17rem]">
           <div className="container-main">
             {" "}
-            <ResourceTopbar/>
+            {/* <ResourceTopbar/> */}
            <ResourceTable/>
           </div>
         </div>

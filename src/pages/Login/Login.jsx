@@ -22,7 +22,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/user/login", {
+      const response = await fetch("https://satillite-town-backend-5i11.vercel.app/api/auth/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

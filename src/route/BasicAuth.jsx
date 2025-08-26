@@ -68,6 +68,12 @@ export const router = createBrowserRouter(
             <Chat />
         } 
       />
+         <Route 
+        path="/resources-management" 
+        element={
+            <Resources />
+        } 
+      />
       <Route path="/chatOther/:userId" element={<ChatOther />} />
       {/* Chat route - only for help_creator */}
       {/* <Route 
@@ -107,21 +113,21 @@ export const router = createBrowserRouter(
         } 
       />
       <Route 
-        path="/help-request" 
+        path="/help-creators" 
         element={
           <AdminRoute>
             <HelpRequestResources />
           </AdminRoute>
         } 
       />
-      <Route 
+      {/* <Route 
         path="/resources-management" 
         element={
           <AdminRoute>
             <Resources />
           </AdminRoute>
         } 
-      />
+      /> */}
       <Route 
         path="/feedback-survey" 
         element={
